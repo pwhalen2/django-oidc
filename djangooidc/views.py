@@ -5,7 +5,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.views import login as auth_login_view, logout as auth_logout_view
+from django.contrib.auth.views import LoginView as auth_login_view, LogoutView as auth_logout_view
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, resolve_url
 from urllib.parse import parse_qs, urlencode
@@ -40,7 +40,7 @@ def openid(request, op_name=None):
     # Internal login?
     if request.method == 'POST' and "internal_login" in request.POST:
         ilform = AuthenticationForm(request.POST)
-        return auth_login_view(request)
+        return auth_login_view.as_view(request)
     else:
         ilform = AuthenticationForm()
 
@@ -96,7 +96,7 @@ def authz_cb(request):
 
 def logout(request, next_page=None):
     if not "op" in request.session.keys():
-        return auth_logout_view(request, next_page)
+        return auth_logout_view.as_view(request, next_page)
 
     client = CLIENTS[request.session["op"]]
 
