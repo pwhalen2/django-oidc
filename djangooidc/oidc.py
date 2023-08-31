@@ -224,7 +224,7 @@ class OIDCClients(object):
                 **kwargs["client_registration"]))
         else:
             raise Exception("Configuration error ?")
-        logger.debug('Client: ' + client)
+        # logger.debug('Client: ' + client)
         return client
 
     def dynamic_client(self, userid):
