@@ -76,7 +76,7 @@ class Client(oic.Client):
         """
         authresp = self.parse_response(AuthorizationResponse, response,
                                        sformat="dict", keyjar=self.keyjar)
-
+    
         if isinstance(authresp, ErrorResponse):
             if authresp["error"] == "login_required":
                 return self.create_authn_request(session)
@@ -224,7 +224,7 @@ class OIDCClients(object):
                 **kwargs["client_registration"]))
         else:
             raise Exception("Configuration error ?")
-
+        logger.debug('Client: ' + client)
         return client
 
     def dynamic_client(self, userid):
