@@ -40,7 +40,7 @@ def openid(request, op_name=None):
     # Internal login?
     if request.method == 'POST' and "internal_login" in request.POST:
         ilform = AuthenticationForm(request.POST)
-        return auth_login_view.as_view()
+        return auth_login_view.as_view()(request)
     else:
         ilform = AuthenticationForm()
 
@@ -96,7 +96,7 @@ def authz_cb(request):
 
 def logout(request, next_page=None):
     if not "op" in request.session.keys():
-        return auth_logout_view.as_view(next_page)
+        return auth_logout_view.as_view()(request, next_page)
 
     client = CLIENTS[request.session["op"]]
 
